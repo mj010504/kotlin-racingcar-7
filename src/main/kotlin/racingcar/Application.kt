@@ -13,6 +13,7 @@ fun main() {
     println("시도할 횟수는 몇 회인가요?")
     val moveCount  = Console.readLine().toInt()
 
+
     for(i in 0 until moveCount) {
         for(carIdx in 0 until carDistanceList.size) {
             moveCar(carIdx, carDistanceList)
@@ -20,6 +21,16 @@ fun main() {
         }
         println()
     }
+
+    val maxMove = carDistanceList.max()
+    val raceWinners  : MutableList<String> = mutableListOf()
+    for(carIdx in 0 until carDistanceList.size) {
+        if(carDistanceList[carIdx] == maxMove) {
+            raceWinners.add(carNameList[carIdx])
+        }
+    }
+
+    println("최종 우승자 : ${raceWinners.joinToString(", ")}")
 
 }
 
