@@ -1,6 +1,7 @@
 package racingcar
 
 import camp.nextstep.edu.missionutils.Console
+import camp.nextstep.edu.missionutils.Randoms.pickNumberInRange
 
 fun main() {
 
@@ -11,5 +12,17 @@ fun main() {
 
     println("시도할 횟수는 몇 회인가요?")
     val moveCount  = Console.readLine().toInt()
-    
+
+    for(i in 0 until moveCount) {
+        for(carIdx in 0 until carDistanceList.size) {
+            moveCar(carIdx, carDistanceList)
+            println("${carNameList[carIdx]} : ${("-".repeat(carDistanceList[carIdx]))}")
+        }
+        println()
+    }
+
+}
+
+fun moveCar(carIdx : Int, carDistanceList : MutableList<Int>) {
+    carDistanceList[carIdx] += if(pickNumberInRange(0, 9) >= 4) 1 else 0
 }
