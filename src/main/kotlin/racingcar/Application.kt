@@ -24,7 +24,7 @@ fun main() {
     val moveCount = input.toInt()
 
     val carDistanceList = MutableList(carNameList.size) {0}
-    for(i in 0 until moveCount) {
+    repeat(moveCount) {
         for(carIdx in 0 until carDistanceList.size) {
             moveCar(carIdx, carDistanceList)
             println("${carNameList[carIdx]} : ${("-".repeat(carDistanceList[carIdx]))}")
