@@ -3,11 +3,20 @@ package racingcar
 import camp.nextstep.edu.missionutils.Console
 import camp.nextstep.edu.missionutils.Randoms.pickNumberInRange
 
+enum class ErrorMessages(val errorMessage: String) {
+    INVALID_CAR_NAME("올바르지 않은 자동차 이름입니다. 자동차 이름은 반드시 알파벳 문자로 시작해야 하며, 뒤에 선택적으로 숫자를 포함할 수 있습니다"),
+    INVALID_CAR_NAME_LENGTH("자동차 이름이 허용 길이를 초과했습니다. 자동차 이름은 5자 이하만 가능합니다."),
+}
+
 fun main() {
 
     println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)")
     val str = Console.readLine()
     val carNameList = str.split(',')
+    for(carName in carNameList) {
+        isValidCarName(carName)
+    }
+
     val carDistanceList = MutableList(carNameList.size) {0}
 
     println("시도할 횟수는 몇 회인가요?")
@@ -36,4 +45,15 @@ fun main() {
 
 fun moveCar(carIdx : Int, carDistanceList : MutableList<Int>) {
     carDistanceList[carIdx] += if(pickNumberInRange(0, 9) >= 4) 1 else 0
+}
+
+fun isValidCarName(carName : String) {
+    if(carName.length > 5) throwInvalidStringException(ErrorMessages.INVALID_CAR_NAME_LENGTH.errorMessage)
+    val regex = Regex("^[A-Za-z]+[0-9]*$")
+    if(!regex.matches(carName)) throwInvalidStringException(ErrorMessages.INVALID_CAR_NAME.errorMessage)
+
+}
+
+private fun throwInvalidStringException(message : String) {
+    throw IllegalArgumentException(message)
 }
